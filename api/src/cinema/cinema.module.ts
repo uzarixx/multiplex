@@ -9,6 +9,7 @@ import { CityModule } from '../city/city.module';
   providers: [CinemaService],
   controllers: [CinemaController],
   imports: [SequelizeModule.forFeature([Cinema]), CityModule],
+  exports: [CinemaService],
 })
 export class CinemaModule {
 }

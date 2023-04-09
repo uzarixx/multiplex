@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UsePipes } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UsePipes } from '@nestjs/common';
 import { CinemaService } from './cinema.service';
 import { CreateCinemaDto } from './dto/create-cinema.dto';
 import { ValidationPipe } from '../pipes/validation.pipe';
@@ -13,4 +13,10 @@ export class CinemaController {
   createCinema(@Body() dto: CreateCinemaDto) {
     return this.cinemaService.createCinema(dto);
   }
+
+  @Get('/get-cinema-by-id/:id')
+  getCinemaById(@Param('id') id: number) {
+    return this.cinemaService.findCinemaById(id);
+  }
+
 }

@@ -1,5 +1,7 @@
-import { Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
+import { Column, DataType, ForeignKey, HasMany, Model, Table } from 'sequelize-typescript';
 import { City } from '../city/city.model';
+import { CinemaPhotos } from '../cinema-photos/cinema-photos.model';
+import { TechnologiesToCinema } from '../technologies-to-cinema/technologies-to-cinema.model';
 
 interface ICinema {
   name: string;
@@ -16,4 +18,9 @@ export class Cinema extends Model<Cinema, ICinema> {
   name: string;
   @Column(({ type: DataType.STRING }))
   address: string;
+  @HasMany(() => CinemaPhotos)
+  cinemaPhotos: CinemaPhotos[];
+
+  @HasMany(() => TechnologiesToCinema)
+  technologiesToCinema: TechnologiesToCinema[];
 }
