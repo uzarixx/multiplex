@@ -7,6 +7,7 @@ import { NotFoundException } from '../exceptions/httpExceptions/notFound.excepti
 import { CinemaPhotos } from '../cinema-photos/cinema-photos.model';
 import { Technologies } from '../technologies/technologies.model';
 import { TechnologiesToCinema } from '../technologies-to-cinema/technologies-to-cinema.model';
+import { CinemaHall } from '../cinema-hall/cinema-hall.model';
 
 @Injectable()
 export class CinemaService {
@@ -29,7 +30,7 @@ export class CinemaService {
         { model: CinemaPhotos },
         {
           model: TechnologiesToCinema,
-          include: [ Technologies ]
+          include: [Technologies],
         },
       ],
     });

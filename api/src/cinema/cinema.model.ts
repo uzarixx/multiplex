@@ -2,6 +2,7 @@ import { Column, DataType, ForeignKey, HasMany, Model, Table } from 'sequelize-t
 import { City } from '../city/city.model';
 import { CinemaPhotos } from '../cinema-photos/cinema-photos.model';
 import { TechnologiesToCinema } from '../technologies-to-cinema/technologies-to-cinema.model';
+import { CinemaHall } from '../cinema-hall/cinema-hall.model';
 
 interface ICinema {
   name: string;
@@ -23,4 +24,7 @@ export class Cinema extends Model<Cinema, ICinema> {
 
   @HasMany(() => TechnologiesToCinema)
   technologiesToCinema: TechnologiesToCinema[];
+
+  @HasMany(() => CinemaHall)
+  cinemaHall: CinemaHall[];
 }

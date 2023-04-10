@@ -7,6 +7,10 @@ import { CinemaModule } from './cinema/cinema.module';
 import { CinemaPhotosModule } from './cinema-photos/cinema-photos.module';
 import { TechnologiesModule } from './technologies/technologies.module';
 import { TechnologiesToCinemaModule } from './technologies-to-cinema/technologies-to-cinema.module';
+import { CinemaHallModule } from './cinema-hall/cinema-hall.module';
+import { CinemaHallPlacesModule } from './cinema-hall-places/cinema-hall-places.module';
+import { CinemaHallPlacesBookingModule } from './cinema-hall-places-booking/cinema-hall-places-booking.module';
+import { ScheduleModule } from './schedule/schedule.module';
 
 @Module({
   imports: [
@@ -21,6 +25,10 @@ import { TechnologiesToCinemaModule } from './technologies-to-cinema/technologie
     CinemaPhotosModule,
     TechnologiesModule,
     TechnologiesToCinemaModule,
+    CinemaHallModule,
+    CinemaHallPlacesModule,
+    CinemaHallPlacesBookingModule,
+    ScheduleModule,
   ],
   controllers: [],
   providers: [],
