@@ -11,6 +11,7 @@ import { CinemaHallModule } from './cinema-hall/cinema-hall.module';
 import { CinemaHallPlacesModule } from './cinema-hall-places/cinema-hall-places.module';
 import { CinemaHallPlacesBookingModule } from './cinema-hall-places-booking/cinema-hall-places-booking.module';
 import { ScheduleModule } from './schedule/schedule.module';
+import { ScheduleToHallModule } from './schedule-to-hall/schedule-to-hall.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { ScheduleModule } from './schedule/schedule.module';
     CinemaHallPlacesModule,
     CinemaHallPlacesBookingModule,
     ScheduleModule,
+    ScheduleToHallModule,
   ],
   controllers: [],
   providers: [],

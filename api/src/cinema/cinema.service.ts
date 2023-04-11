@@ -8,6 +8,7 @@ import { CinemaPhotos } from '../cinema-photos/cinema-photos.model';
 import { Technologies } from '../technologies/technologies.model';
 import { TechnologiesToCinema } from '../technologies-to-cinema/technologies-to-cinema.model';
 import { CinemaHall } from '../cinema-hall/cinema-hall.model';
+import { Schedule } from '../schedule/schedule.model';
 
 @Injectable()
 export class CinemaService {
@@ -32,6 +33,7 @@ export class CinemaService {
           model: TechnologiesToCinema,
           include: [Technologies],
         },
+        { model: Schedule },
       ],
     });
     if (!cinema) {

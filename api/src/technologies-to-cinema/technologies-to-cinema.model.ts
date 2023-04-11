@@ -7,7 +7,7 @@ interface ITechnologiesToCinema {
   cinemaId: number;
 }
 
-@Table({ tableName: 'Technologies-To-Cinema' })
+@Table({ tableName: 'technologies-To-Cinema' })
 export class TechnologiesToCinema extends Model<TechnologiesToCinema, ITechnologiesToCinema> {
   @Column({ type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true })
   id: number;

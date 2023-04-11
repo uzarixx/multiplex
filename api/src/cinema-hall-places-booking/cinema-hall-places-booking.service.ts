@@ -2,36 +2,35 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CinemaHallPlacesBooking } from './cinema-hall-places-booking.model';
 import { CreateCinemaHallPlaceBookingDto } from './dto/create-cinema-hall-place-booking.dto';
+import { CinemaHallPlacesService } from '../cinema-hall-places/cinema-hall-places.service';
 import { Op } from 'sequelize';
-import { NotFoundError } from 'rxjs';
+import { dateBetween } from '../utils/dateBetween';
+import { BadRequestException } from '../exceptions/httpExceptions/badRequest.exception';
 
 @Injectable()
 export class CinemaHallPlacesBookingService {
-
-  constructor(@InjectModel(CinemaHallPlacesBooking) private readonly cinemaHallPlacesBookingRepository: typeof CinemaHallPlacesBooking) {
+  constructor(
+    @InjectModel(CinemaHallPlacesBooking) private readonly cinemaHallPlacesBookingRepository: typeof CinemaHallPlacesBooking,
+    private readonly cinemaHallPlacesService: CinemaHallPlacesService,
+  ) {
   }
 
 
   async createCinemaHallPlaceBooking(dto: CreateCinemaHallPlaceBookingDto) {
-    return this.cinemaHallPlacesBookingRepository.create(dto);
-  }
-
-  async getBookingPlaces(cinemaHallId: number[], date: string) {
-    const today = new Date(date);
-    const startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-    const endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
-    const cinemaHallPlaces = await this.cinemaHallPlacesBookingRepository.findAll({
+    await this.cinemaHallPlacesService.getHallPlaceById(dto.placeId);
+    const { startDate, endDate } = dateBetween(dto.bookingTime);
+    const findBooked = await this.cinemaHallPlacesBookingRepository.findOne({
       where: {
-        placeId: cinemaHallId,
+        placeId: dto.placeId,
         bookingTime: {
           [Op.between]: [startDate, endDate],
         },
       },
     });
-    if (!cinemaHallPlaces) {
-      return;
+    if (findBooked) {
+      throw new BadRequestException('This place is booked');
     }
-    return cinemaHallPlaces;
+    return this.cinemaHallPlacesBookingRepository.create(dto);
   }
 
 }

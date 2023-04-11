@@ -23,7 +23,7 @@ export class CinemaHallController {
 
   @Get('/get-cinema-hall/:id')
   getCinemaById(@Param('id') id: number) {
-    return this.cinemaHallService.getCinemaById(id);
+    return this.cinemaHallService.getCinemaHallById(id);
   }
 
   @Get('/get-cinema-hall-places/:id')

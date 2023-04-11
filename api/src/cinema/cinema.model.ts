@@ -3,6 +3,7 @@ import { City } from '../city/city.model';
 import { CinemaPhotos } from '../cinema-photos/cinema-photos.model';
 import { TechnologiesToCinema } from '../technologies-to-cinema/technologies-to-cinema.model';
 import { CinemaHall } from '../cinema-hall/cinema-hall.model';
+import { Schedule } from '../schedule/schedule.model';
 
 interface ICinema {
   name: string;
@@ -27,4 +28,7 @@ export class Cinema extends Model<Cinema, ICinema> {
 
   @HasMany(() => CinemaHall)
   cinemaHall: CinemaHall[];
+
+  @HasMany(() => Schedule)
+  schedule: Schedule[];
 }

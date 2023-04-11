@@ -1,6 +1,7 @@
 import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from 'sequelize-typescript';
 import { Cinema } from '../cinema/cinema.model';
 import { CinemaHallPlaces } from '../cinema-hall-places/cinema-hall-places.model';
+import { ScheduleToHall } from '../schedule-to-hall/schedule-to-hall.model';
 
 interface ICinemaHall {
   cinemaId: number;
@@ -22,4 +23,7 @@ export class CinemaHall extends Model<CinemaHall, ICinemaHall> {
 
   @HasMany(() => CinemaHallPlaces)
   cinemaHallPlaces: CinemaHallPlaces[];
+
+  @HasMany(() => ScheduleToHall)
+  scheduleToHall: ScheduleToHall[];
 }

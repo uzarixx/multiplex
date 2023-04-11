@@ -8,6 +8,8 @@ import { TechnologiesToCinema } from '../technologies-to-cinema/technologies-to-
 import { CinemaHall } from '../cinema-hall/cinema-hall.model';
 import { CinemaHallPlaces } from '../cinema-hall-places/cinema-hall-places.model';
 import { CinemaHallPlacesBooking } from '../cinema-hall-places-booking/cinema-hall-places-booking.model';
+import { Schedule } from '../schedule/schedule.model';
+import { ScheduleToHall } from '../schedule-to-hall/schedule-to-hall.model';
 
 export const getSequelizeConfig = (configService: ConfigService): SequelizeModuleOptions => ({
   dialect: 'postgres',
@@ -21,9 +23,11 @@ export const getSequelizeConfig = (configService: ConfigService): SequelizeModul
   models: [
     City,
     Cinema,
+    Schedule,
     CinemaHall,
     Technologies,
     CinemaPhotos,
+    ScheduleToHall,
     CinemaHallPlaces,
     TechnologiesToCinema,
     CinemaHallPlacesBooking,

@@ -7,7 +7,7 @@ interface ITechnologies {
   imageLink: string;
 }
 
-@Table({ tableName: 'Technologies' })
+@Table({ tableName: 'technologies' })
 export class Technologies extends Model<Technologies, ITechnologies> {
   @Column({ type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true })
   id: number;

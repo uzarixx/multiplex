@@ -7,6 +7,8 @@ import { Technologies } from './technologies.model';
 @Module({
   providers: [TechnologiesService],
   controllers: [TechnologiesController],
-  imports: [SequelizeModule.forFeature([Technologies])]
+  imports: [SequelizeModule.forFeature([Technologies])],
+  exports: [TechnologiesService],
 })
-export class TechnologiesModule {}
+export class TechnologiesModule {
+}

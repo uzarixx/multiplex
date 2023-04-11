@@ -8,6 +8,9 @@ import { NotFoundError } from 'rxjs';
 import { CinemaHallPlaces } from '../cinema-hall-places/cinema-hall-places.model';
 import { CinemaHallPlacesBookingService } from '../cinema-hall-places-booking/cinema-hall-places-booking.service';
 import { NotFoundException } from '../exceptions/httpExceptions/notFound.exception';
+import { CinemaHallPlacesBooking } from '../cinema-hall-places-booking/cinema-hall-places-booking.model';
+import { Op } from 'sequelize';
+import { dateBetween } from '../utils/dateBetween';
 
 interface CinemaHallPlaceWithBooking extends CinemaHallPlaces {
   booked: boolean;
@@ -20,7 +23,6 @@ export class CinemaHallService {
   constructor(
     @InjectModel(CinemaHall) private readonly cinemaHallRepository: typeof CinemaHall,
     private readonly cinemaService: CinemaService,
-    private readonly cinemaHallPlacesBookingService: CinemaHallPlacesBookingService,
   ) {
   }
 
@@ -38,8 +40,8 @@ export class CinemaHallService {
     throw new BadRequestException('This cinema hall already exist, or this cinema is not exist');
   }
 
-  async getCinemaById(id: number) {
-    const cinemaHall = await this.cinemaHallRepository.findOne({ where: { id }});
+  async getCinemaHallById(id: number) {
+    const cinemaHall = await this.cinemaHallRepository.findOne({ where: { id } });
     if (!cinemaHall) {
       throw new NotFoundException('Cinema hall is not exist');
     }
@@ -53,15 +55,36 @@ export class CinemaHallService {
         model: CinemaHallPlaces,
       }],
     });
-    const cinemaPlacesBooking = await this.cinemaHallPlacesBookingService.getBookingPlaces(cinemaPlaces.cinemaHallPlaces.map((el) => el.id), date);
+    const cinemaPlacesBooking = await this.findBookedPlaces(id, date, cinemaPlaces);
     const allPlaces = cinemaPlaces.cinemaHallPlaces.map((el) => {
-      const isBooked = cinemaPlacesBooking.some((booking) => booking.placeId === el.id);
+      const isBooked = cinemaPlacesBooking.cinemaHallPlaces
+        .map((el) => el.cinemaHallPlacesBooking[0])
+        .some((booking) => booking.placeId === el.id);
       return ({
         ...el.dataValues,
         booked: isBooked,
       });
     });
     return allPlaces as CinemaHallPlaceWithBooking[];
+  }
+
+  private async findBookedPlaces(id: number, date: string, cinemaPlaces) {
+    const { startDate, endDate } = dateBetween(date);
+    return this.cinemaHallRepository.findOne({
+      where: { id },
+      include: [{
+        model: CinemaHallPlaces,
+        include: [{
+          model: CinemaHallPlacesBooking,
+          where: {
+            placeId: cinemaPlaces.cinemaHallPlaces.map((el) => el.id),
+            bookingTime: {
+              [Op.between]: [startDate, endDate],
+            },
+          },
+        }],
+      }],
+    });
   }
 
 
